@@ -563,6 +563,31 @@ files = [
 ]
 
 [[package]]
+name = "imbalanced-learn"
+version = "0.11.0"
+description = "Toolbox for imbalanced dataset in machine learning."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "imbalanced-learn-0.11.0.tar.gz", hash = "sha256:7582ae8858e6db0b92fef97dd08660a18297ee128d78c2abdc006b8bd86b8fdc"},
+    {file = "imbalanced_learn-0.11.0-py3-none-any.whl", hash = "sha256:20dc7dee3c838b4d213f021bb2b4007862704160d06bd292a6bdf931590b2516"},
+]
+
+[package.dependencies]
+joblib = ">=1.1.1"
+numpy = ">=1.17.3"
+scikit-learn = ">=1.0.2"
+scipy = ">=1.5.0"
+threadpoolctl = ">=2.0.0"
+
+[package.extras]
+docs = ["keras (>=2.4.3)", "matplotlib (>=3.1.2)", "memory-profiler (>=0.57.0)", "numpydoc (>=1.5.0)", "pandas (>=1.0.5)", "pydata-sphinx-theme (>=0.13.3)", "seaborn (>=0.9.0)", "sphinx (>=6.0.0)", "sphinx-copybutton (>=0.5.2)", "sphinx-gallery (>=0.13.0)", "sphinxcontrib-bibtex (>=2.4.1)", "tensorflow (>=2.4.3)"]
+examples = ["keras (>=2.4.3)", "matplotlib (>=3.1.2)", "pandas (>=1.0.5)", "seaborn (>=0.9.0)", "tensorflow (>=2.4.3)"]
+optional = ["keras (>=2.4.3)", "pandas (>=1.0.5)", "tensorflow (>=2.4.3)"]
+tests = ["black (>=23.3.0)", "flake8 (>=3.8.2)", "keras (>=2.4.3)", "mypy (>=1.3.0)", "pandas (>=1.0.5)", "pytest (>=5.0.1)", "pytest-cov (>=2.9.0)", "tensorflow (>=2.4.3)"]
+
+[[package]]
 name = "ipykernel"
 version = "6.25.1"
 description = "IPython Kernel for Jupyter"
@@ -2479,4 +2504,4 @@ test = ["mypy", "pre-commit", "pytest", "pytest-asyncio", "websockets (>=10.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "b27676bf86696f5e6c56259ca62944f2377f974c4c17b53a635fc1e55c7576ba"
+content-hash = "7a630e82b8dcd091c59fcb674bf341667d0bd746de9291b480baf08b3eb3f488"
