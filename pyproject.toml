@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "kagglecomp"
+version = "0.1.0"
+description = "Kaggle Competition to predict potential NBA players"
+authors = ["kirandas-dev <KiranShanker.Das@student.uts.edu.au>"]
+license = "kirandas"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "2.0.1"
+jupyterlab = "3.6.3"
+scikit-learn = "1.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
