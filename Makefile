@@ -9,6 +9,7 @@ BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = AT1-NBAComp
 PYTHON_INTERPRETER = python3
+KAGGLE_DATA_URL = https://archive.ics.uci.edu/ml/machine-learning-databases/00447/data.zip
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -27,7 +28,12 @@ requirements: test_environment
 
 ## Make Dataset
 data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	
+	  @echo ">>> Downloading data from Kaggle."
+    curl -o data/raw/data.zip $(KAGGLE_DATA_URL)
+    @echo ">>> Unzipping."
+    unzip data/raw/data.zip -d data/raw
+    $(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
 
 ## Delete all compiled Python files
 clean:
@@ -142,3 +148,7 @@ help:
 		printf "\n"; \
 	}' \
 	| more $(shell test $(shell uname) = Darwin && echo '--no-init --raw-control-chars')
+
+
+
+
