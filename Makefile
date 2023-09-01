@@ -9,7 +9,8 @@ BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = AT1-NBAComp
 PYTHON_INTERPRETER = python3
-KAGGLE_DATA_URL = https://archive.ics.uci.edu/ml/machine-learning-databases/00447/data.zip
+KAGGLE_DATA_URL = https://raw.githubusercontent.com/kirandas-dev/data-ML/main/train.csv
+KAGGLE_TEST_DATA_URL = https://raw.githubusercontent.com/kirandas-dev/data-ML/main/test.csv
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -28,17 +29,31 @@ requirements: test_environment
 
 ## Make Dataset
 data: requirements
-	
-	  @echo ">>> Downloading data from Kaggle."
-    curl -o data/raw/data.zip $(KAGGLE_DATA_URL)
-    @echo ">>> Unzipping."
-    unzip data/raw/data.zip -d data/raw
-    $(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw data/processed
+	@echo ">>> Downloading train data from Kaggle."
+	curl -o data/raw/train.csv $(KAGGLE_DATA_URL)
+	@echo ">>> Downloading test data from Kaggle."
+	curl -o data/raw/test.csv $(KAGGLE_TEST_DATA_URL)
+	@echo ">>> Data downloaded."
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/train.csv data/processed
+
+# Define the model training target.
+train_model: data
+	@echo ">>> Training the model."
+	$(PYTHON_INTERPRETER) src/models/train_model.py
+
+load_model:
+	@echo ">>> Loading the best model."
+	$(PYTHON_INTERPRETER) src/models/load_model.py
+
+predict_model:
+	@echo ">>> Predicting on unseen data."
+	$(PYTHON_INTERPRETER) src/models/predict_model.py
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
+
 
 ## Lint using flake8
 lint:

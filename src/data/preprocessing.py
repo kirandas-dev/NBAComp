@@ -134,6 +134,10 @@ class DataProcessor:
 
         # Resample the scaled training set using SMOTE
         self.X_train_resampled, self.y_train_resampled = smote.fit_resample(X_train_scaled, self.y_train)
+       
+        # Saving Scaler and smote to the model folder
+        dump(scaler,  'models/scaler.joblib')
+        dump(smote,  'models/smote.joblib')
         # Resample the validation set
         self.X_val_scaled = scaler.transform(self.X_val)
         self.X_val_resampled, self.y_val_resampled = smote.fit_resample(self.X_val_scaled, self.y_val)
@@ -142,9 +146,19 @@ class DataProcessor:
         self.X_test_scaled = scaler.transform(self.X_test)
 
         self.X_test_resampled, self.y_test_resampled = smote.fit_resample(self.X_test_scaled, self.y_test)
+
     
     def write_data(self, processed_data_path):
         """Write processed data to the directory."""
+       
+        self.X_train_resampled = pd.DataFrame(self.X_train_resampled, columns=self.X_train.columns)
+        self.X_val_resampled = pd.DataFrame(self.X_val_resampled, columns=self.X_val.columns)
+        self.X_test_resampled = pd.DataFrame(self.X_test_resampled, columns=self.X_test.columns)
+
+        self.y_train_resampled = pd.Series(self.y_train_resampled)
+        self.y_val_resampled = pd.Series(self.y_val_resampled)
+        self.y_test_resampled = pd.Series(self.y_test_resampled)
+        
         self.X_train_resampled.to_csv(processed_data_path + '/X_train.csv', index=False)
         self.X_val_resampled.to_csv(processed_data_path + '/X_val.csv', index=False)
         self.X_test_resampled.to_csv(processed_data_path + '/X_test.csv', index=False)
@@ -152,10 +166,11 @@ class DataProcessor:
         self.y_val_resampled.to_csv(processed_data_path + '/y_val.csv', index=False)
         self.y_test_resampled.to_csv(processed_data_path + '/y_test.csv', index=False)
 
+
 if __name__ == "__main__":
     data_processor = DataProcessor()
-    raw_data_path = '../data/raw/train.csv'
-    processed_data_path = '../data/processed'
+    raw_data_path = './data/raw/train.csv'
+    processed_data_path = './data/processed'
 
     data_processor.read_data(raw_data_path)
     data_processor.process_data()
