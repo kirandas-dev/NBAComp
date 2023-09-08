@@ -47,7 +47,7 @@ X_tt_df = pd.DataFrame(X_tt, columns=test_selected.columns)
 
 
 import pandas as pd
-import numpy as np
+
 
 # Load the test data
 test = pd.read_csv('data/raw/test.csv')

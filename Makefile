@@ -34,10 +34,14 @@ data: requirements
 	@echo ">>> Downloading test data from Kaggle."
 	curl -o data/raw/test.csv $(KAGGLE_TEST_DATA_URL)
 	@echo ">>> Data downloaded."
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/train.csv data/processed
+	
+visualise_data: 
+	$(PYTHON_INTERPRETER) src/visualization/visualize.py
 
+process_data: 
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py data/raw/train.csv data/processed
 # Define the model training target.
-train_model: data
+train_model: 
 	@echo ">>> Training the model."
 	$(PYTHON_INTERPRETER) src/models/train_model.py
 
